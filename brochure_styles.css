@@ -1,0 +1,390 @@
+/* ============================================
+   GLOBAL
+   ============================================ */
+
+html {
+    scroll-behavior: smooth; /* Sin esto: al hacer clic en un enlace ancla (#resume-tay),
+                                la página salta bruscamente al destino.
+                                Con smooth: se desplaza con una animación suave y fluida */
+}
+
+/* scroll-margin-top resuelve un problema clásico con headers fijos:
+   cuando navegas a una sección con un enlace ancla, el header sticky
+   se superpone y tapa el título de destino.
+   Esta propiedad empuja el punto de llegada 70px hacia abajo
+   (el mismo valor que la altura del header) para que el título quede visible */
+#resume-tay,
+#resume-cienaga,
+#normas-verdes {
+    scroll-margin-top: 70px;
+}
+
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+header {
+    display: flex;
+    background-color: #a7c957;          /* Verde claro de la marca */
+    justify-content: space-between;     /* Logo a la izquierda, nav a la derecha */
+    align-items: center;
+    height: 60px;
+    position: sticky; /* sticky: el header se comporta normal hasta que el usuario hace scroll
+                         y llega al valor de "top". A partir de ahí se queda pegado.
+                         A diferencia de fixed, sigue ocupando espacio en el flujo del documento */
+    top: 0;           /* Define desde qué punto se "pega" (0 = borde superior de la pantalla) */
+    z-index: 100;     /* Número alto para que quede encima de todo el demás contenido al hacer scroll */
+}
+
+header h2 {
+    margin-left: 20px;
+    color: aliceblue;
+}
+
+header ol {
+    list-style: none; /* Elimina los números que aparecen por defecto en los <ol> */
+    display: flex;    /* Pone los items del menú en fila horizontal */
+    gap: 40px;        /* Espacio entre cada enlace del menú */
+    margin-right: 20px;
+}
+
+header ol a {
+    text-decoration: none; /* Quita el subrayado por defecto de los enlaces */
+    color: rgb(7, 7, 2);
+}
+
+header ol a:hover {
+    color: white;
+    transition: color 0.3s; /* El cambio de color al pasar el mouse tarda 0.3s en vez de ser instantáneo */
+}
+
+
+/* ============================================
+   BODY / INTRO
+   ============================================ */
+
+body {
+    margin: 0; /* Los navegadores aplican un margen por defecto al body.
+                  Sin este reset, aparece un borde blanco alrededor de toda la página */
+    background-color: beige;
+}
+
+/* position: relative es CLAVE aquí: los hijos con position: absolute
+   se van a posicionar en relación a ESTE div, no a toda la página */
+body div.foto-intro {
+    position: relative;
+    overflow: hidden; /* Oculta las imágenes del carrusel que están fuera del área visible */
+}
+
+/* El <ul> es la "tira de imágenes" del carrusel.
+   Tiene width: 400% porque contiene 4 slots (aunque solo hay 3 imágenes).
+   La animación lo mueve con margin-left negativo para cambiar qué imagen se ve */
+body div.foto-intro ul {
+    position: relative;
+    overflow: hidden;
+    display: flex;           /* Las imágenes van en fila horizontal */
+    width: 400%;             /* 4 veces el ancho de la pantalla para alojar todas las imágenes */
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    animation: cambio 15s infinite ; /* Ejecuta la animación "cambio" cada 15 segundos sin parar */
+}
+
+body div.foto-intro ul li{
+    list-style: none;
+    width: 25%;   /* 25% de 400% = 100% del ancho real de pantalla por imagen */
+    height: 100%;
+}
+
+body div.foto-intro img {
+    width: 100%;
+    height: 450px;
+    display: block;    /* Elimina el espacio fantasma que los navegadores añaden bajo las imágenes inline */
+    object-fit: cover; /* Recorta la imagen para que llene el contenedor sin deformarse.
+                          Sin object-fit, la imagen se estiraría o aplastaría */
+}
+
+/* h1 y p superpuestos sobre el carrusel.
+   position: absolute los saca del flujo normal → no empujan al resto del contenido.
+   Se posicionan en relación al div.foto-intro (que tiene position: relative).
+   top/left + transform: translate(-50%, -50%) los centran perfectamente:
+   sin transform el punto de referencia sería la esquina superior izquierda del elemento */
+body div h1#h1-superpuesto {
+    color: whitesmoke;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Corrige el punto de origen: en vez de alinear la esquina, centra el elemento */
+    white-space: nowrap;              /* Evita que el texto se parta en varias líneas */
+}
+
+body div p#p-superpuesto {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 15px;
+}
+
+/* ============================================
+   ANIMACIÓN DEL CARRUSEL
+
+   @keyframes define los pasos de la animación.
+   Cada número es un porcentaje del tiempo total (15s).
+
+   La idea: mantener cada imagen visible un rato (misma posición)
+   y luego deslizar rápido al siguiente (cambio de margin-left).
+
+   0%  → 30%:  Se ve imagen 1 (margin-left: 0%)
+   30% → 35%:  Transición rápida a imagen 2
+   35% → 65%:  Se ve imagen 2 (margin-left: -100%)
+   65% → 75%:  Transición rápida a imagen 3
+   75% → 90%:  Se ve imagen 3 (margin-left: -200%)
+   90% → 100%: Vuelve a imagen 1 (infinite reinicia el ciclo)
+   ============================================ */
+@keyframes cambio {
+    0% { margin-left: 0%; }
+    30% { margin-left: 0%; }
+
+    35% { margin-left: -100%; }
+    65% { margin-left: -100%; }
+
+    75% { margin-left: -200%; }
+    90% { margin-left: -200%; }
+
+    100% { margin-left: 0%; }
+    
+
+    
+}
+
+
+/* align-items: flex-start evita que aside y main se estiren
+   a la misma altura; cada uno crece según su propio contenido */
+body div.contenedor-principal {
+    display: flex;
+    align-items: flex-start;
+}
+
+
+/* ============================================
+   ASIDE (barra lateral de destinos)
+   ============================================ */
+
+aside {
+    width: 400px; /* Ancho fijo. El main ocupa el resto con flex: 1 */
+    padding: 20px;
+}
+
+aside h3 {
+    text-align: center;
+    color: #227525; /* Verde oscuro para los títulos de destino */
+}
+
+aside h3 img {
+    height: 20px; /* Ícono de pino pequeño al lado del título */
+}
+
+aside p {
+    text-align: center;
+}
+
+aside p.horarios,
+aside p.ubicacion {
+    color: #227525;
+}
+
+aside p.horarios img,
+aside p.ubicacion img {
+    height: 20px;
+    vertical-align: -5px; /* Baja el ícono 5px para alinearlo visualmente con el texto al lado */
+}
+
+aside iframe {
+    width: 100%; /* El mapa de Google se adapta al ancho del aside en vez de tener un tamaño fijo */
+}
+
+
+/* ============================================
+   MAIN (galería de imágenes)
+   ============================================ */
+
+body main {
+    flex: 1;      /* flex: 1 es shorthand de flex-grow: 1.
+                     Significa "ocupa todo el espacio disponible que no use el aside".
+                     Si el aside mide 400px y la pantalla mide 1200px, el main tendrá 800px */
+    height: 400px;
+}
+
+/* --- Galería Tayrona --- */
+main div.imagen-grande1 {
+    width: 100%;
+    height: 100%;  /* Hereda los 400px definidos en body main */
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+main div.imagen-grande1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta la imagen para que llene el contenedor sin deformarse */
+}
+
+main div.imagenes-pequeñas1 {
+    display: flex;
+    gap: 5px;      /* Pequeño espacio entre las dos imágenes */
+}
+
+main div.imagenes-pequeñas1 img {
+    width: 50%;    /* Cada imagen ocupa exactamente la mitad del contenedor */
+    height: 420px;
+    object-fit: cover;
+}
+
+/* --- Galería Ciénaga (misma lógica que Tayrona) --- */
+main div.imagen-grande2 {
+    width: 100%;
+    height: 80%;
+    margin-bottom: 5px;
+    margin-top: 80px; /* Separa visualmente esta galería de la anterior */
+}
+
+main div.imagen-grande2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+main div.imagenes-pequeñas2 {
+    display: flex;
+    gap: 5px;
+}
+
+main div.imagenes-pequeñas2 img {
+    width: 50%;
+    height: 340px;
+    object-fit: cover;
+}
+
+
+/* ============================================
+   SECCIÓN INFERIOR (normas ecológicas)
+   ============================================ */
+
+.seccion-inferior {
+    text-align: center;
+    color: #227525;
+}
+
+/* grid-template-columns: repeat(3, 400px) crea exactamente 3 columnas de 400px cada una.
+   column-gap añade espacio extra solo entre columnas (sobreescribe el gap horizontal).
+   width: fit-content → el grid solo ocupa lo que necesitan sus columnas, no el 100%.
+   margin: 0 auto → con un ancho menor al de la página, esto lo centra horizontalmente */
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 400px);
+    gap: 20px;
+    column-gap: 100px;
+    width: fit-content; /* El grid solo ocupa el ancho que necesitan sus columnas, no el 100% */
+    margin: 0 auto;     /* Con width: fit-content, esto lo centra horizontalmente en la página */
+}
+
+.tarjetas div {
+    background-color: #4caf50;
+    border-radius: 15px; /* Redondea las esquinas de la tarjeta */
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Apila ícono, título y texto en vertical */
+    align-items: center;    /* Todo centrado horizontalmente dentro de la tarjeta */
+    text-align: center;
+    color: white;
+    transition: transform 0.3s, box-shadow 0.3s; /* Define qué propiedades animar y cuánto tardan.
+                                                    Se animan al ocurrir el hover */
+}
+
+/* Al pasar el mouse, la tarjeta sube y proyecta una sombra para dar efecto 3D */
+.tarjetas div:hover {
+    transform: translateY(-8px);                  /* Mueve la tarjeta 8px hacia arriba */
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.603);  /* Sombra debajo para reforzar el efecto de elevación */
+}
+
+.tarjetas div img {
+    width: 25px;
+    height: 25px;
+    margin-bottom: 10px;
+}
+
+.tarjetas div h4 {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.tarjetas div p {
+    font-size: 12px;
+    margin: 0;
+}
+
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+    background-color: #a7c957;
+    height: 120px;
+    display: flex;
+    justify-content: space-between; /* Separa el bloque izquierdo (logo) del derecho (copyright) */
+    align-items: center;
+}
+
+footer div.contenedor-footer-izq {
+    width: 15%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+footer img#gobernacion {
+    height: 50px;
+}
+
+/* Íconos de redes sociales distribuidos en fila con espacio entre ellos */
+footer ol {
+    list-style: none;
+    display: flex;
+    gap: 5px;
+    margin: 0;
+    padding: 0; /* Resetea el padding izquierdo que los navegadores aplican a las listas por defecto */
+}
+
+footer ol img {
+    height: 20px;
+}
+
+footer div#imagen-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra logo, texto y redes dentro del bloque izquierdo */
+}
+
+footer div#imagen-texto p {
+    margin: 0;
+    font-size: 13px;
+}
+
+footer p#copyright {
+    display: flex;
+}
+
+footer div.texto-derecha {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Resalta visualmente la etiqueta "Cuenta con nosotros" */
+footer p#cuenta {
+    background-color: yellow;
+}

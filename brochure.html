@@ -1,0 +1,266 @@
+<!DOCTYPE html> <!-- Le dice al navegador que use HTML5, la versión moderna del lenguaje -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Permite mostrar tildes, ñ y caracteres especiales correctamente -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- viewport: hace que la página se adapte al ancho del dispositivo.
+         Sin esto, los celulares muestran la página reducida como si fuera escritorio. -->
+    <link rel="stylesheet" href="brochure_styles.css"> <!-- Conecta el archivo de estilos CSS -->
+    <title>Document</title>
+</head>
+
+<!--------------------------------- HEADER: Barra de navegacion----------------------------------->
+<body>   
+    <header>
+        <!-- El CSS le aplica position: sticky para que el header se quede pegado
+             al tope de la pantalla mientras el usuario hace scroll -->
+        <h2>Ecolombia</h2>
+        <nav>
+        <ol>
+            <!-- Cada href="#id" es un enlace ancla: navega a un elemento
+                 de la misma página que tenga ese id.
+                 El CSS aplica scroll-behavior: smooth para que el desplazamiento sea animado -->
+            <li class="link"><a href="#resume-tay">Tayrona</a></li>
+            <li class="link"><a href="#resume-cienaga">Cienaga de mallorquin</a></li>
+            <li class="link"><a href="#normas-verdes">Normas de puntos verdes</a></li>
+        </ol>
+        </nav>
+    </header>
+
+<!----------------------- SECCIÓN INTRO: Imagen de portada con texto superpuesto------------------>
+
+        <div class="foto-intro">
+            <!-- El CSS le da position: relative a este div para que los hijos
+                 con position: absolute se posicionen en relación a él, no a toda la página -->
+
+            <ul>
+                <!-- Este <ul> es la "tira de película" del carrusel.
+                     El CSS le da width: 400% (4 slots) y la animación @keyframes "cambio"
+                     lo mueve con margin-left negativo para mostrar una imagen distinta cada vez.
+                     overflow: hidden en el div padre oculta las imágenes fuera del área visible -->
+                <li>
+                    <img src="imagenes/tayron.jpg" alt="">
+                </li>
+
+                <li>
+                    <img src="imagenes/imagen1.jpg" alt="">
+                </li>
+                <li>
+                    <img src="imagenes/juan1.jpg" alt="">
+                </li>
+            </ul>
+
+                    <!-- Estos dos elementos tienen position: absolute en el CSS,
+                         lo que los saca del flujo normal y los superpone encima del carrusel.
+                         top + left + transform: translate(-50%, -50%) los centran perfectamente -->
+                    <h1 id="h1-superpuesto">Visita la enriquecida eco-diversidad que tiene Colombia para ti</h1>
+                    <p id="p-superpuesto"><b>Ven y descubre los bellos paisajes, la fauna y la naturaleza tiene reservado Colombia para ofrecerte, sal de la
+                    rutina y del ruidoso dia a dia de la ciudad y disfruta de un dia de relajacion acompañado de bellos paisajes.</b> </p>    
+            
+                
+        </div>
+
+<!----------------------- CONTENEDOR PRINCIPAL: aside izquierdo + galería derecha ------------------>
+    <div class="contenedor-principal">
+        <!-- El CSS convierte este div en flex, poniendo el aside a la izquierda
+             y el main a la derecha. align-items: flex-start evita que ambos
+             se estiren para igualar alturas -->
+
+        <!----------- ASIDE: Información de cada destino (actúa como barra lateral) ------->
+        <aside>
+            <!-- El CSS le da width: 400px fijo. El main ocupa el resto con flex: 1 -->
+
+            <!------------------------------ Destino 1:  Tayrona ----------------------------------->
+
+            <h3 id="resume-tay"><img src="imagenes/pino(2).png" alt="">Parque tyrona</h3>
+            <!-- id="resume-tay" es el destino del primer enlace ancla del nav.
+                 El CSS le aplica scroll-margin-top: 70px para que el header fijo
+                 no tape el título al llegar aquí con la navegación -->
+            <p>El Parque Nacional Natural Tayrona es uno de los Parque Naturales mas importantes de Colombia que se halla
+                    ubicado en la ciudad de Santa Marta
+                    Es un paraíso natural del caribe de Colombia con una enorme belleza. Su hábitat tiene una importante
+                    cantidad de especies que se disgregan
+                    en zonas con diferentes pisos térmicos que van desde el nivel del mar hasta alturas de 900 metros. De las
+                    15.000 hectáreas que integran
+                    el parque, 3.000 son área marina. El Parque está considerado como una de las reservas ecológicas más
+                    significativas de Suramérica, posee una
+                    gran belleza natural y una nutrida flora y fauna, contiene playas vírgenes, arrecifes, un mar espléndido, la
+                    espectacular Sierra Nevada
+                    de Santa Marta, restos arqueológicos, cascadas, quebradas y mucho más. Te recomendamos visitar cuanto antes
+                    esta belleza natural
+                    ideal para el ecoturismo. No te arrepentirás de este viaje donde podrás disfrutar de esta reserva natural
+                    con paisajes únicos e
+                    indescriptibles, dignos de un Turismo sostenible, vanguardista y ambiental. Contamos con Paquetes Turísticos
+                    todo incluido.</p>
+
+            <!-- Las clases "horarios" y "ubicacion" les aplican color verde en el CSS -->
+            <p class="horarios"><img src="imagenes/calendario.png" alt=""><b>Horarios</b></p>
+            <p>Abierto de lunes a domingos de 6:00 a.m hasta 5:00 p.m (Ingreso)</p>
+            
+            <p class="ubicacion"><img src="imagenes/ubicacion.png" alt=""><b>Ubicacion</b></p>
+
+            <!--------------------------- Mapa embebido de google maps---------------------------------->
+            <!-- iframe incrusta contenido externo (Google Maps) dentro de la página.
+                 El CSS le aplica width: 100% para que se adapte al ancho del aside.
+                 loading="lazy" hace que el mapa solo cargue cuando el usuario llega a ese punto,
+                 mejorando la velocidad de carga de la página -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3912.3863486813307!2d-74.06833102409028!3d11.30644614919203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef48b22eaf45f4d%3A0x485723dccbdb882f!2sParque%20Nacional%20Natural%20Tayrona!5e0!3m2!1ses-419!2sco!4v1775651379779!5m2!1ses-419!2sco"
+                    width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <hr> <!-- Línea horizontal que separa visualmente los dos destinos -->
+            <br>
+
+            <!--------------------------- Destino 2:  Cienaga de mallorquin --------------------------->
+            <!-- Misma estructura que el Destino 1 -->
+
+            <h3 id="resume-cienaga"><img src="imagenes/pino(2).png" alt="">Parque cienaga de mallorquin</h3>
+            <!-- id="resume-cienaga" es el destino del segundo enlace ancla del nav -->
+            <p>La cienaga de mallorquin es un tesoro natural que alberga cerca de 155 especies de aves residentes y
+                    migratorias, es el hotel y restaurantede muchas aves
+                    que aqui se alimentan y re refugian.
+                    El Ecoparque Ciénaga de Mallorquín es un importante humedal costero y ecosistema de manglares en el norte de
+                    Barranquilla, situado junto
+                    a la desembocadura del río Magdalena. Recuperado como espacio ecológico, ofrece senderos elevados,
+                    avistamiento de aves, kayak y actividades
+                    de educación ambiental para la conservación de la biodiversidad.
+                    Es un lugar ideal para la educación ambiental, observación de manglares y disfrutar de la naturaleza, con
+                    actividades a precios accesibles.</p>
+
+            <p class="horarios"><img src="imagenes/calendario.png" alt=""><b>Horarios</b></p>
+            <p>Abierto de lunes a domingos de 5:00 a.m hasta 5:00 p.m </p>
+
+            <p class="ubicacion"><img src="imagenes/ubicacion.png" alt=""><b>Ubicacion</b></p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15663.584746445962!2d-74.8597437376601!3d11.046409686130247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ef42c200a625451%3A0x3e9b84c1ac5f65e5!2sCi%C3%A9naga%20de%20Mallorqu%C3%ADn!5e0!3m2!1ses-419!2sco!4v1775652068309!5m2!1ses-419!2sco"
+                    width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </aside>
+
+        <main>
+            <!-- flex: 1 en el CSS hace que el main ocupe todo el espacio
+                 horizontal que no usa el aside -->
+
+            <!---------Primer grupo de imagenes: Tayrona---------->
+            <!-- Estructura: 1 imagen grande arriba + 2 imágenes pequeñas abajo -->
+            <div class="imagen-grande1">
+                <img src="imagenes/juan1.jpg" alt="">
+            </div>
+
+            <div class="imagenes-pequeñas1">
+                <!-- El CSS convierte este div en flex, poniendo las dos imágenes
+                     una al lado de la otra, cada una con width: 50% -->
+                <img src="imagenes/juan2.jpg" alt="">
+                <img src="imagenes/juan3.jpg" alt="">
+            </div>
+
+            <!---------Segundo grupo de imagenes: Cienaga (misma estructura)---------->
+             <div class="imagen-grande2">
+                <img src="imagenes/cienaga1.jpg" alt="">
+            </div>
+
+            <div class="imagenes-pequeñas2">
+                <img src="imagenes/cienaga2.jpeg" alt="">
+                <img src="imagenes/cienaga3.jpg" alt="">
+            </div>     
+        </main>
+    </div> <!-- Fin del contenedor-principal -->
+
+    <section class="seccion-inferior">
+        <!-- id="normas-verdes" es el destino del tercer enlace ancla del nav -->
+        <h3 id="normas-verdes">Normas de puntos verdes</h3>
+        <p><b>Es muy importante preservar nuestros puntos ecologicos,
+            en este sentido debemos ser conscientes y acatar las normas para mantener el
+            entorno ecologico en optimas condiciones</b></p>
+
+        
+    <div class="tarjetas">
+        <!-- El CSS convierte este div en un grid de 3 columnas de 400px.
+             Cada tarjeta tiene hover con translateY(-8px) + box-shadow para efecto de elevación -->
+
+        <div class="div1">
+            <img src="imagenes/flor.png" alt="">
+            <h4>Respetar la flora y fauna</h4>
+            <p>Evitar tocar, recolectar o dañar plantas y animales en su hábitat natural.</p>
+        </div>
+
+        <div class="div2">
+            <img src="imagenes/basura.png" alt="">
+            <h4>No arrojar basura</h4>
+            <p>Utilizar los contenedores adecuados y mantener los espacios limpios.</p>
+        </div>
+
+        <div class="div3">
+            <img src="imagenes/caminar.png" alt="">
+            <h4>Seguir los senderos designados</h4>
+            <p>Caminar solo por las áreas permitidas para preservar la vegetación.</p>
+        </div>
+
+        <div class="div4">
+            <img src="imagenes/huella.png" alt="">
+            <h4>No alimentar a los animales</h4>
+            <p>Evitar darles comida para prevenir dependencias y alterar su comportamiento.</p>
+        </div>
+
+        <div class="div5">
+            <img src="imagenes/flama-de-fuego.png" alt="">
+            <h4>No hacer fuego</h4>
+            <p>Prohibido encender fogatas o usar dispositivos de calefacción.</p>
+        </div>
+
+        <div class="div6">
+            <img src="imagenes/mascota.png" alt="">
+            <h4>Controlar a las mascotas</h4>
+            <p>Mantener a las mascotas bajo control y recoger sus excrementos.</p>
+        </div>
+
+        <div class="div7">
+            <img src="imagenes/advertencia.png" alt="">
+            <h4>Respetar las señales y normativas</h4>
+            <p>Seguir las indicaciones establecidas para garantizar la seguridad.</p>
+        </div>
+
+        <div class="div8">
+            <img src="imagenes/alto-volumen.png" alt="">
+            <h4>No hacer ruido excesivo</h4>
+            <p>Mantener un nivel de ruido bajo para no perturbar la fauna.</p>
+        </div>
+
+        <div class="div9">
+            <img src="imagenes/gota-de-agua.png" alt="">
+            <h4>Ser responsable con el agua y energía</h4>
+            <p>Utilizar los recursos naturales de manera consciente.</p>
+        </div>
+
+    </div>
+    
+    </section>
+    <br>
+
+    <footer>
+        <!-- display: flex con justify-content: space-between separa
+             el bloque izquierdo (logo + redes) del texto de copyright -->
+        <div class="contenedor-footer-izq">
+            <div id="imagen-texto">
+                <img id="gobernacion" src="imagenes/gobernacion.png" alt="">
+                <p>Gobernacion del atlantico</p>
+                <p id="cuenta">Cuenta con nosotros</p>
+                <!-- El CSS le pone background-color: yellow para destacarlo visualmente -->
+            
+                <ol>
+                    <!-- Cada ícono de red social es un enlace.
+                         Los href apuntan a Google como placeholder -->
+                    <li class="link"><a href="https://www.google.com/"><img src="imagenes/gorjeo.png" alt=""></a></li>
+                    <li class="link"><a href="https://www.google.com/"><img src="imagenes/correo-electronico.png" alt=""></a></li>
+                    <li class="link"><a href="https://www.google.com/"><img src="imagenes/whatsapp.png" alt=""></a></li>
+                </ol>
+            
+            </div>
+        </div>
+
+        <div class="texto-derecha">
+            <p id="copyright">© 2024 EcoColombia. Todos los derechos reservados.</p>
+        </div>    
+    </footer>
+    
+
+</body>     
+</html>
